@@ -11,7 +11,7 @@ export function login(email, password) {
       }
     })
       .then(data => {
-        console.log("hello");
+        console.log("hello", data);
         dispatch(saveAccessToken(data.jwt));
         // dispatch(userLoggedIn(token, profile));
       })
