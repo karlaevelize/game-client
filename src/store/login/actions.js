@@ -27,9 +27,9 @@ export function saveAccessToken(accessToken) {
   };
 }
 
-export function userLoggedIn(token, profile) {
+export function userLoggedIn(token) {
   return {
     type: "auth/USER_LOGGED_IN",
-    payload: { token: token, profile: profile }
+    payload: { token: token }
   };
 }
