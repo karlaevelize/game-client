@@ -23,10 +23,16 @@ class Homepage extends Component {
     event.preventDefault();
 
     try {
+      if (this.state.text === "") {
+        alert("Room must have a name!");
+        console.warn("Please write something");
+        return false;
+      }
       const response = await superagent
         .post(`${this.url}/gameroom`)
         .send({ name: this.state.text });
       console.log("response test", response);
+      this.setState({ text: "" });
     } catch (error) {
       console.warn("error test", error);
     }
