@@ -1,7 +1,7 @@
+import "./App.css";
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import "./App.css";
 import Homepage from "./components/Homepage";
 import Toolbar from "./components/Toolbar";
 import SignUpPage from "./components/SignUpPage";

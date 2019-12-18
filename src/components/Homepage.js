@@ -40,7 +40,11 @@ class Homepage extends Component {
   render() {
     console.log("this.props.-test:", this.props);
     const { rooms } = this.props;
-    const list = rooms.map(room => <p key={room.id}>{room.name}</p>);
+    const list = rooms.map(room => (
+      <p key={room.id}>
+        {room.name} <button>Join Game</button>
+      </p>
+    ));
     console.log({ rooms, list });
     return (
       <div>
