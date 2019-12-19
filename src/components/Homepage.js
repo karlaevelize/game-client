@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import superagent from "superagent";
+import { Link } from "react-router-dom";
 
 class Homepage extends Component {
   url = "http://localhost:4000";
@@ -43,12 +44,29 @@ class Homepage extends Component {
     this.setState({ text: value });
   };
 
+  joinRoom = async roomId => {
+    console.log("jwt test:", this.props.auth.jwt);
+    try {
+      const response = await superagent
+        .put(`${this.url}/join`)
+        .set("Authorization", `Bearer ${this.props.auth.jwt}`)
+        .send({
+          roomId
+        });
+
+      console.log("NEW TEST :", response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     console.log("this.props.-test:", this.props);
     const { rooms } = this.props;
     const list = rooms.map(room => (
       <p key={room.id}>
-        {room.name} <button>Join Game</button>
+        {room.name}
+        <button onClick={() => this.joinRoom(room.id)}>Join Game</button>
       </p>
     ));
     console.log({ rooms, list });
@@ -61,6 +79,7 @@ class Homepage extends Component {
           alt="gif"
           src="https://cdn.dribbble.com/users/14356/screenshots/2406950/hands.gif"
         ></img>
+        <h3>New Room:</h3>
         <form onSubmit={this.onSubmit}>
           <input onChange={this.onChange} value={this.state.text} type="text" />
           <button>Submit</button>
@@ -73,7 +92,8 @@ class Homepage extends Component {
 
 function mapStateToProps(state) {
   return {
-    rooms: state.rooms
+    rooms: state.rooms,
+    auth: state.auth
   };
 }
 

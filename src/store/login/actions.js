@@ -1,7 +1,6 @@
 import api from "../../api";
 
 export function login(email, password) {
-  // Return the thunk itself, i.e. a function
   return function thunk(dispatch, getState) {
     api("/login", {
       method: "POST",
@@ -11,15 +10,13 @@ export function login(email, password) {
       }
     })
       .then(data => {
-        console.log("hello", data);
-        dispatch(saveAccessToken(data.jwt));
-        // dispatch(userLoggedIn(token, profile));
+        console.log("test data", data);
+        dispatch(loggedIn(data.jwt, data.email));
       })
       .catch(err => console.log("err", err));
   };
 }
 
-// An action creator
 export function saveAccessToken(accessToken) {
   return {
     type: "auth/SAVE_ACCESS_TOKEN",
@@ -27,9 +24,9 @@ export function saveAccessToken(accessToken) {
   };
 }
 
-export function userLoggedIn(token) {
+export function loggedIn(jwt, email) {
   return {
-    type: "auth/USER_LOGGED_IN",
-    payload: { token: token }
+    type: "auth/LOGGED_IN",
+    payload: { jwt, email }
   };
 }

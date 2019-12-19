@@ -50,9 +50,19 @@ class LoginPage extends React.Component {
             <button type="submit">Login</button>
           </p>
         </form>
+        <p>
+          If you don't have an account, please <a href="/signup">sign up </a>
+          first
+        </p>
       </div>
     );
   }
 }
 
-export default connect()(LoginPage);
+function mapStateToProps(state) {
+  return {
+    loggedin: Boolean(state.auth.jwt)
+  };
+}
+
+export default connect(mapStateToProps)(LoginPage);

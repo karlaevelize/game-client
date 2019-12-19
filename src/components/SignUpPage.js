@@ -48,6 +48,9 @@ class SignUp extends Component {
             <button type="submit">Sign Up</button>
           </p>
         </form>
+        <p>
+          After sign up, go to <a href="/login">login</a>page
+        </p>
       </div>
     );
   }
