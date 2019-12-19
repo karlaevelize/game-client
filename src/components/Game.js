@@ -1,75 +1,149 @@
 import React, { Component } from "react";
+import scissors from "../../src/scissors.png";
+import paper from "../../src/paper.png";
+import rock from "../../src/rocky.png";
 
-const PlayerCard = ({ color, symbol }) => {
-  const style = {
-    backgroundColor: color,
-    backgroundImage: "url(./img/ + symbol + .png)"
-  };
-  return (
-    <div style={style} className="player-card">
-      {symbol}
+const weapons = ["rock", "paper", "scissors"];
+const weapons2 = ["rock", "paper", "scissors"];
+
+const Player1 = ({ weapon }) => (
+  <>
+    <div className="player">
+      <img
+        className="player-image"
+        src={
+          weapon === "rock" ? rock : weapon === "scissors" ? scissors : paper
+        }
+        alt="Rock Paper Scissors"
+      />
     </div>
-  );
-};
+  </>
+);
+
+const Player2 = ({ weapon2 }) => (
+  <>
+    <div className="player">
+      <img
+        className="player-image"
+        src={
+          weapon2 === "rock" ? rock : weapon2 === "scissors" ? scissors : paper
+        }
+        alt="Rock Paper Scissors"
+      />
+    </div>
+  </>
+);
 
 class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.symbol = ["rock", "paper", "scissors"];
-    this.state = {};
-  }
+  state = {
+    playerOne: weapons[0],
+    playerTwo: weapons2[1],
+    winner: ""
+  };
 
-  decideWinner = () => {
-    const { playerBlue, playerRed } = this.state;
-    if (playerRed === playerBlue) {
-      return "It's a draw!";
-    }
-    if (
-      (playerRed === "rock" && playerBlue === "scissors") ||
-      (playerRed === "paper" && playerBlue === "rock") ||
-      (playerRed === "scissors" && playerBlue === "paper")
+  startGame = () => {
+    this.setState({
+      winner: this.selectWinner()
+    });
+  };
+
+  selectWinner = () => {
+    const { playerOne, playerTwo } = this.state;
+
+    if (playerOne === playerTwo) {
+      return "Oops, it's a Tie!";
+    } else if (
+      (playerOne === "rock" && playerTwo === "scissors") ||
+      (playerOne === "scissors" && playerTwo === "paper") ||
+      (playerOne === "paper" && playerTwo === "rock")
     ) {
-      return "Red player wins!";
+      return "Player One Wins!";
     } else {
-      return "Blue player wins!";
+      return "Player Two Wins!";
     }
   };
 
-  runGame = () => {
-    let counter = 0;
-    let myInterval = setInterval(() => {
-      counter++;
-      this.setState({
-        playerRed: this.symbol[Math.floor(Math.random() * 3)],
-        playerBlue: this.symbol[Math.floor(Math.random() * 3)],
-        winner: ""
-      });
-      if (counter > 40) {
-        clearInterval(myInterval);
-        this.setState({ winner: this.decideWinner() });
-      }
-    }, 100);
+  selectWeapon = weapon => {
+    this.setState({
+      playerOne: weapon,
+      winner: ""
+    });
+  };
+
+  selectWeapon2 = weapon2 => {
+    this.setState({
+      playerTwo: weapon2,
+      winner: ""
+    });
   };
 
   render() {
+    const { playerOne, playerTwo, winner } = this.state;
     return (
-      <header>
-        <div className="App">
-          <br />
-          <PlayerCard
-            color="red"
-            symbol={this.state.playerRed}
-            className="redPlayer"
-          />
-          <PlayerCard
-            color="blue"
-            symbol={this.state.playerBlue}
-            className="bluePlayer"
-          />
-          <p>{this.state.winner}</p>
-          <button onClick={this.runGame}>Run Game</button>
+      <>
+        <h1 style={{ textAlign: "center" }}>Rock Paper Scissors</h1>
+
+        <div>
+          <Player1 weapon={playerOne} />
+          <Player2 weapon2={playerTwo} />
         </div>
-      </header>
+        <div>
+          <button
+            className="weaponBtn"
+            onClick={() => {
+              this.selectWeapon("rock");
+            }}
+          >
+            rock
+          </button>
+          <button
+            className="weaponBtn"
+            onClick={() => {
+              this.selectWeapon("paper");
+            }}
+          >
+            paper
+          </button>
+          <button
+            className="weaponBtn"
+            onClick={() => {
+              this.selectWeapon("scissors");
+            }}
+          >
+            scissor
+          </button>
+        </div>
+        <div>
+          <button
+            className="weaponBtn"
+            onClick={() => {
+              this.selectWeapon2("rock");
+            }}
+          >
+            rock
+          </button>
+          <button
+            className="weaponBtn"
+            onClick={() => {
+              this.selectWeapon2("paper");
+            }}
+          >
+            paper
+          </button>
+          <button
+            className="weaponBtn"
+            onClick={() => {
+              this.selectWeapon2("scissors");
+            }}
+          >
+            scissor
+          </button>
+        </div>
+        <div className="winner">{winner ? this.selectWinner() : null}</div>
+        <button type="button" onClick={this.startGame}>
+          Start!
+        </button>
+      </>
     );
   }
 }
