@@ -10,8 +10,8 @@ class Toolbar extends Component {
         <Link to="/login">Login</Link>
         <br />
         <Link to="/signup">Sign Up</Link>
-        <br />
-        <Link to="/game">Play Game</Link>
+        {/* <br />
+        <Link to="/game">Play Game</Link> */}
       </div>
     );
   }

@@ -37,7 +37,7 @@ const Player2 = ({ weapon2 }) => (
 class Game extends Component {
   state = {
     playerOne: weapons[0],
-    playerTwo: weapons2[1],
+    playerTwo: weapons2[0],
     winner: ""
   };
 
@@ -51,15 +51,15 @@ class Game extends Component {
     const { playerOne, playerTwo } = this.state;
 
     if (playerOne === playerTwo) {
-      return "Oops, it's a Tie!";
+      return <h2>"Oops, it's a Tie!"</h2>;
     } else if (
       (playerOne === "rock" && playerTwo === "scissors") ||
       (playerOne === "scissors" && playerTwo === "paper") ||
       (playerOne === "paper" && playerTwo === "rock")
     ) {
-      return "Player One Wins!";
+      return <h2>"Player One Wins!"</h2>;
     } else {
-      return "Player Two Wins!";
+      return <h2>"Player Two Wins!"</h2>;
     }
   };
 
@@ -88,6 +88,7 @@ class Game extends Component {
           <Player2 weapon2={playerTwo} />
         </div>
         <div>
+          <h3>Player 1</h3>
           <button
             className="weaponBtn"
             onClick={() => {
@@ -114,6 +115,7 @@ class Game extends Component {
           </button>
         </div>
         <div>
+          <h3>Player 2</h3>
           <button
             className="weaponBtn"
             onClick={() => {
@@ -139,7 +141,9 @@ class Game extends Component {
             scissor
           </button>
         </div>
+        <br />
         <div className="winner">{winner ? this.selectWinner() : null}</div>
+        <br />
         <button type="button" onClick={this.startGame}>
           Start!
         </button>

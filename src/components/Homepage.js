@@ -65,8 +65,10 @@ class Homepage extends Component {
     const { rooms } = this.props;
     const list = rooms.map(room => (
       <p key={room.id}>
-        {room.name}
-        <button onClick={() => this.joinRoom(room.id)}>Join Game</button>
+        {room.name}{" "}
+        <Link key={room.id} to={`/game/${room.id}`}>
+          <button onClick={() => this.joinRoom(room.id)}>Join Game</button>
+        </Link>
       </p>
     ));
     console.log({ rooms, list });
